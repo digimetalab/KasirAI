@@ -5,8 +5,328 @@
 <h1 align="center">KasirAI</h1>
 
 <p align="center">
-  <strong>Fintech-Grade AI-Powered POS untuk UMKM Indonesia</strong>
+  <strong>Fintech-Grade AI-Powered POS for Indonesian SMEs</strong>
 </p>
+
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#deployment">Deployment</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white" alt="FastAPI"/>
+  <img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white" alt="Next.js"/>
+  <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white" alt="Supabase"/>
+  <img src="https://img.shields.io/badge/Midtrans-00AEEF?style=flat&logo=visa&logoColor=white" alt="Midtrans"/>
+</p>
+
+***
+
+## Overview
+
+**KasirAI** is a multi-tenant POS system for Indonesian SMEs built with fintech-grade standards. It combines fast cashier operations with AI business intelligence.
+
+> 💡 *Not just a cashier — an AI business assistant for business owners.*
+
+***
+
+## 📸 User Interface
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <b>Login Page</b><br>
+        <img src="docs/scrt/sc_login.png" width="250" alt="Login Screen" />
+      </td>
+      <td align="center">
+        <b>POS (Cashier)</b><br>
+        <img src="docs/scrt/sc_pos.png" width="250" alt="POS Screen" />
+      </td>
+      <td align="center">
+        <b>Dashboard (Owner)</b><br>
+        <img src="docs/scrt/sc_dashboard.png" width="250" alt="Dashboard Screen" />
+      </td>
+    </tr>
+  </table>
+</div>
+
+***
+
+## Features
+
+### 🧾 POS Core
+
+* **Cashier-first UX** — Minimal clicks, keyboard shortcuts, fast checkout
+* Real-time calculation with transparent breakdown
+* Member & non-member transaction modes
+* Digital receipts
+
+### 💳 Payment (Midtrans)
+
+| Method | Description |
+|--------|-------------|
+| **QRIS** | Dynamic QR, scan & pay instantly |
+| **GoPay** | Gojek E-wallet |
+| **OVO** | OVO E-wallet |
+| **ShopeePay** | Shopee E-wallet |
+| **Dana** | Dana E-wallet |
+| **Credit/Debit Card** | Visa, Mastercard, JCB |
+| **Bank Transfer** | BCA, Mandiri, BNI, BRI, Permata |
+| **Cash** | Cash payment |
+
+> 💰 **Funds go directly to the business owner's account** registered during tenant registration in KasirAI.
+
+### 👥 Loyalty Program
+
+* **Member Tiers**: Regular, Silver (1.2x), Gold (1.5x), Platinum (2x) points
+* Flexible earning & redemption configuration
+* Fast member registration
+* Margin protection
+
+### 🎫 Discount Engine
+
+* Percentage & nominal discounts
+* Minimum purchase requirements
+* Usage limits & validity periods
+* Maximum discount enforcement
+
+### 📊 Tax & Compliance
+
+* Inclusive/Exclusive tax calculation
+* Tax Base (DPP) separation
+* **Indonesia Coretax Export**
+* Complete audit trail
+
+### 🤖 AI Insights (Groq)
+
+* Daily sales analysis
+* Discount effectiveness metrics
+* Loyalty ROI tracking
+* **Indonesian & English Support**
+
+### 📲 Telegram Notifications
+
+* Real-time transaction alerts
+* Daily summary reports
+* AI business coaching
+
+***
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Frontend (Next.js)                       │
+│               POS Interface • Owner Dashboard                │
+└─────────────────────────┬───────────────────────────────────┘
+                          │ REST API
+┌─────────────────────────▼───────────────────────────────────┐
+│                    Backend (FastAPI)                         │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐         │
+│  │CalculationEngine│ │PaymentService│ │  AI Service  │         │
+│  └──────────────┘ └──────────────┘ └──────────────┘         │
+└─────────────────────────┬───────────────────────────────────┘
+              ┌───────────┼───────────┐
+              ▼           ▼           ▼
+┌─────────────────┐ ┌─────────────┐ ┌─────────────┐
+│    Supabase     │ │   Midtrans  │ │    Groq     │
+│   (PostgreSQL)  │ │  (Payment)  │ │    (AI)     │
+└─────────────────┘ └─────────────┘ └─────────────┘
+```
+
+**Calculation Order (Strict):**
+
+```
+Subtotal → Discount → Loyalty Points → Tax → Grand Total
+```
+
+***
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | Next.js 16, TypeScript, Tailwind CSS |
+| Backend | FastAPI, Python 3.11+ |
+| Database | Supabase (PostgreSQL) |
+| Payment | **Midtrans** (QRIS, E-Wallet, Card, VA) |
+| AI | Groq API |
+| Messaging | Telegram Bot API |
+
+***
+
+## Project Structure
+
+```
+KasirAI/
+├── api/                # FastAPI Backend
+│   ├── src/
+│   │   ├── api/       # REST endpoints
+│   │   ├── core/      # Business logic
+│   │   ├── dto/       # Pydantic schemas
+│   │   └── ext/       # Midtrans, Groq, Telegram
+│   └── main.py
+├── web/                # Next.js Frontend
+│   └── src/app/
+├── db/                 # Database schema
+│   └── initial_schema.sql
+├── docs/               # Assets & design
+├── .env                # Environment config
+└── README.md
+```
+
+***
+
+## Installation
+
+### Prerequisites
+
+* Python 3.11+
+* Node.js 18+
+* pnpm
+* Supabase Account
+* Midtrans Account (Sandbox/Production)
+
+### Setup
+
+```bash
+# Clone
+git clone https://github.com/digimetalab/KasirAI.git
+cd KasirAI
+
+# Backend
+cd api
+python -m venv venv
+venv\Scripts\activate      # Windows
+pip install -r requirements.txt
+
+# Frontend
+cd ../web
+pnpm install
+
+# Run
+cd ../api && uvicorn main:app --reload   # Terminal 1
+cd ../web && pnpm dev                     # Terminal 2
+```
+
+***
+
+## Configuration
+
+### .env (Root)
+
+```env
+# Supabase
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_ANON_KEY=eyJxxx
+
+# Midtrans
+MIDTRANS_SERVER_KEY=SB-Mid-server-xxx
+MIDTRANS_CLIENT_KEY=SB-Mid-client-xxx
+MIDTRANS_IS_PRODUCTION=false
+
+# AI & Notifications
+GROQ_API_KEY=gsk_xxx
+TELEGRAM_BOT_TOKEN=123456:ABC-xxx
+
+# Next.js Public
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_MIDTRANS_CLIENT_KEY=SB-Mid-client-xxx
+```
+
+***
+
+## Midtrans Integration
+
+### Payment Flow
+
+```
+1. Customer checkout → Frontend sends to API
+2. API creates Midtrans transaction → gets token/QR
+3. Frontend displays QR/redirects to payment page
+4. Customer pays → Midtrans sends webhook to API
+5. API updates status → sends Telegram notification
+6. Funds go directly to business owner's account
+```
+
+### Tenant Registration
+
+When a business owner registers in KasirAI:
+
+1. Input bank account details (name, number, bank)
+2. Data stored in Supabase (encrypted)
+3. Midtrans settlement direct to that account
+
+### Payment Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/pay/create` | Create payment transaction |
+| POST | `/api/pay/webhook` | Midtrans Callback |
+| GET | `/api/pay/status/{id}` | Check payment status |
+
+***
+
+## API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/transactions/cart` | Create new cart |
+| POST | `/api/transactions/cart/{id}/items` | Add items |
+| POST | `/api/transactions/cart/{id}/discount` | Apply discount |
+| POST | `/api/transactions/cart/{id}/loyalty` | Redeem points |
+| GET | `/api/transactions/cart/{id}/breakdown` | Calculate total |
+| POST | `/api/transactions/cart/{id}/finalize` | Finalize transaction |
+| GET | `/api/transactions/export` | Export Coretax |
+| GET | `/api/products` | List products |
+| GET | `/api/customers` | List members |
+| GET | `/api/discounts` | List discounts |
+
+***
+
+## Deployment
+
+### Backend (Railway/Render)
+
+```bash
+docker build -t kasirai-api ./api
+docker run -p 8000:8000 kasirai-api
+```
+
+### Frontend (Vercel)
+
+```bash
+cd web && vercel deploy
+```
+
+***
+
+## Roadmap
+
+| Phase | Status |
+|-------|--------|
+| Backend API + Database | ✅ Completed |
+| Midtrans Integration | 🔄 In Progress |
+| Frontend POS UI | ⏳ Planned |
+| AI Insights + Telegram | ⏳ Planned |
+
+***
+
+## About
+
+**Digimetalab** — AI Agency, Bali, Indonesia\
+Building intelligent solutions since 2020.
+
+***
+
+## License
+
+[Apache 2.0](LICENSE)
 
 <p align="center">
   <a href="#fitur">Fitur</a> •
