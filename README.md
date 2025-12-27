@@ -1,176 +1,232 @@
-# KasirAI 🚀
-**AI-Powered POS + QRIS with Telegram Business Assistant**
+<p align="center">
+  <img src="assets/logo.png" alt="KasirAI Logo" width="120"/>
+</p>
 
-KasirAI is a modern, multi-tenant POS web application designed for Indonesian UMKM.
-It combines **POS**, **QRIS payments**, and **AI-powered business insights** delivered directly via **Telegram Bot**.
+<h1 align="center">KasirAI</h1>
 
-Built by **Digimetalab – AI Agency**.
+<p align="center">
+  <strong>Fintech-Grade AI-Powered POS for Indonesian SMEs</strong>
+</p>
 
----
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#deployment">Deployment</a>
+</p>
 
-## ✨ Key Features
+<p align="center">
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white" alt="NestJS"/>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black" alt="React"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=flat&logo=prisma&logoColor=white" alt="Prisma"/>
+</p>
+
+***
+
+## Overview
+
+**KasirAI** is a production-ready, multi-tenant Point of Sale system designed specifically for Indonesian UMKM (SMEs). Built with fintech-grade standards, it combines fast checkout operations with AI-powered business intelligence delivered via Telegram.
+
+> 💡 *Not just a cashier — an AI business assistant for business owners.*
+
+***
+
+## Features
 
 ### 🧾 POS Core
-- Fast web-based cashier system
-- Product & category management
-- Discounts & tax configuration
-- Digital receipts
 
-### 💳 QRIS Payment
-- Static & dynamic QRIS
-- Real-time payment status
-- Automatic reconciliation
-- Secure webhook handling
+* **Cashier-first UX** — Minimal clicks, keyboard shortcuts, fast checkout
+* Real-time calculation with transparent breakdown
+* Member & non-member transaction modes
+* Digital receipt generation
 
-### 🤖 AI Business Intelligence
-- Sales analysis & peak hours
-- Inventory forecasting
-- Pricing recommendations
-- Promotion suggestions
-- Daily profit & cashflow insights
+### 💳 Payments
 
-### 📲 Telegram Bot (AI Co-Pilot)
-- Daily sales summary
-- Low-stock alerts
-- AI business coaching chat
-- Promo recommendations
-- Profit warnings
+* **QRIS Integration** — Static & dynamic QR codes
+* Real-time payment status updates
+* Automatic reconciliation
 
----
+### 👥 Loyalty Program
 
-## 🧠 Product Vision
+* **Member tiers**: Regular, Silver (1.2x), Gold (1.5x), Platinum (2x) points
+* Configurable points earning & redemption
+* Member search with quick registration
+* Margin protection to prevent losses
 
-> KasirAI is not just a POS.
-> It is an **AI business assistant** that helps UMKM owners make better decisions every day.
+### 🎫 Discount Engine
 
----
+* Percentage & fixed amount discounts
+* Minimum purchase requirements
+* Usage limits & validity periods
 
-## 🏗️ Tech Stack
+### 📊 Tax & Compliance
 
-### Frontend
-- React.js
-- TypeScript
-- Vite
-- Tailwind CSS
+* Inclusive/exclusive tax calculation
+* DPP (taxable base) separation
+* **Coretax Indonesia export-ready**
+* Complete audit trail
 
-### Backend
-- Node.js
-- NestJS
-- PostgreSQL
-- REST API (API-first)
+### 🤖 AI Insights (Groq)
 
-### AI & Automation
-- OpenAI API / Local LLM
-- n8n for workflow automation
+* Daily sales analysis
+* Discount effectiveness metrics
+* Loyalty ROI tracking
+* Tax impact analysis
+* **Multilingual**: 🇮🇩 Indonesian, 🇬🇧 English, 🇨🇳 Chinese
 
-### Messaging
-- Telegram Bot API
+### 📲 Telegram Integration
 
-### Payment
-- QRIS (via Indonesian Payment Gateway)
+* Transaction notifications
+* Daily summary reports
+* AI business coaching
+* Configurable via admin dashboard
 
-### Infrastructure
-- Docker
-- Cloud-ready (AWS / GCP / VPS)
+***
 
----
+## Architecture
 
-## 📦 Monorepo Structure
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Frontend (React)                      │
+│              POS Interface • Owner Dashboard             │
+└─────────────────────────┬───────────────────────────────┘
+                          │ REST API
+┌─────────────────────────▼───────────────────────────────┐
+│                   Backend (NestJS)                       │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐       │
+│  │  Auth   │ │ Products│ │  POS    │ │Payments │       │
+│  └─────────┘ └─────────┘ └─────────┘ └─────────┘       │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐       │
+│  │ Loyalty │ │Discount │ │   Tax   │ │   AI    │       │
+│  └─────────┘ └─────────┘ └─────────┘ └─────────┘       │
+└─────────────────────────┬───────────────────────────────┘
+                          │
+┌─────────────────────────▼───────────────────────────────┐
+│              PostgreSQL (Prisma ORM)                     │
+└─────────────────────────────────────────────────────────┘
+```
 
-apps/
-web/ # POS Web App (React)
-api/ # Backend API (NestJS)
+**Calculation Order (Strict):**
 
-packages/
-shared-types/
-utils/
+```
+Subtotal → Discount → Loyalty Points → Tax → Grand Total
+```
 
-docs/
-infra/
+***
 
+## Tech Stack
 
----
+| Layer | Technology |
+|-------|------------|
+| Frontend | React, TypeScript, Vite, Tailwind CSS |
+| Backend | NestJS, Node.js |
+| Database | PostgreSQL, Prisma ORM |
+| AI | Groq API |
+| Messaging | Telegram Bot API |
+| Payment | QRIS (Indonesian Payment Gateway) |
+| Infrastructure | Docker, VPS-ready |
 
-## 🚀 Getting Started (Development)
+***
+
+## Project Structure
+
+```
+KasirAI/
+├── apps/
+│   ├── api/                 # NestJS Backend
+│   │   └── src/
+│   │       ├── modules/     # Feature modules
+│   │       ├── services/    # Business logic
+│   │       └── prisma/      # Database schema
+│   └── web/                 # React Frontend
+│       └── src/
+│           ├── pages/       # Page components
+│           ├── components/  # UI components
+│           └── stores/      # State management
+├── packages/
+│   └── shared-types/        # Shared TypeScript types
+├── docker-compose.yml
+└── README.md
+```
+
+***
+
+## Getting Started
 
 ### Prerequisites
-- Node.js >= 18
-- pnpm
-- Docker
 
-### Install Dependencies
+* Node.js ≥ 18
+* pnpm
+* PostgreSQL (or Docker)
+
+### Installation
+
 ```bash
+# Clone repository
+git clone https://github.com/digimetalab/KasirAI.git
+cd KasirAI
+
+# Install dependencies
 pnpm install
 
-Run Backend
-cd apps/api
-pnpm run start:dev
+# Setup environment
+cp .env.example .env
 
-Run Frontend
-cd apps/web
-pnpm run dev
+# Start database
+docker-compose up -d postgres
 
-🤖 Telegram Bot Setup
+# Run migrations
+pnpm --filter api prisma migrate dev
 
-Create a bot via @BotFather
+# Start development
+pnpm dev
+```
 
-Get BOT_TOKEN
+***
 
-Set webhook endpoint:
+## Deployment
 
-POST /telegram/webhook
+### Docker (Recommended)
 
-🔐 Environment Variables
+```bash
+docker-compose up -d
+```
 
-Each app uses its own .env file.
+### Environment Variables
 
-Example:
+```env
+# Database
+DATABASE_URL=postgresql://user:pass@localhost:5432/kasirai
 
-DATABASE_URL=
-QRIS_API_KEY=
-OPENAI_API_KEY=
-TELEGRAM_BOT_TOKEN=
+# AI
+GROQ_API_KEY=your_groq_api_key
 
-🗺️ Roadmap
-MVP
+# Telegram (configurable via Admin UI)
+TELEGRAM_BOT_TOKEN=your_bot_token
+```
 
-POS Core
+***
 
-QRIS Payment
+## Roadmap
 
-Telegram notifications
+| Phase | Status |
+|-------|--------|
+| POS Core + Tax | 🔄 In Progress |
+| QRIS + Loyalty | ⏳ Planned |
+| AI Insights + Telegram | ⏳ Planned |
+| Coretax Export | ⏳ Planned |
 
-V1
+***
 
-AI Sales & Inventory
+## About
 
-Telegram AI Coach
+**Digimetalab** — AI Agency, Bali, Indonesia\
+Building intelligent solutions since 2020.
 
-Promotion Engine
+***
 
-V2
+## License
 
-Dynamic pricing
-
-Financing recommendations
-
-Multi-outlet support
-
-📈 Success Metrics
-
-Daily active merchants
-
-QRIS transaction volume
-
-Telegram bot engagement
-
-AI feature adoption
-
-🏢 Company
-
-Digimetalab
-AI Agency – Bali, Indonesia
-
-📄 License
-
-Apache 2.0 License
+[Apache 2.0](LICENSE)

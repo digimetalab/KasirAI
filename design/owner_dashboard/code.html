@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KasirAI - Owner Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a202c",
+                        "text-primary-light": "#0d121b",
+                        "text-secondary-light": "#4c669a",
+                        "text-primary-dark": "#f8f9fc",
+                        "text-secondary-dark": "#9ca3af",
+                        "accent-green": "#07883b",
+                        "accent-red": "#e73908",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .chart-bar {
+            transition: height 0.3s ease-in-out;
+        }
+        .chart-bar:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark overflow-hidden">
+<div class="flex h-screen w-full bg-background-light dark:bg-background-dark">
+<aside class="flex w-64 flex-col border-r border-[#e7ebf3] dark:border-[#2d3748] bg-surface-light dark:bg-surface-dark transition-all duration-300 hidden md:flex z-20">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<div class="flex gap-3 items-center px-2 pt-2">
+<img alt="KasirAI Logo" class="aspect-square rounded-full size-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4dajM5eVuTBnpTEyT_TuIb2SJCl-2xKJA0JkF2CAG05FZtIHoCn1wn4vqwi2RDW1L3YsjYRRhkVE4FuTRJ230Z1O5MMgNZ8pO56nRgkw8eXMoWaspY7v6csOltkI8rYY0V06NSS4i2TuJkiJrPL0ZtIbXfFwT3JAXDNjOJujRwY-kjTHbx0DtxcA_dD82SWGrIX1Jk1DvsicmvigCpmagsoDOXmb1IEtlPeFfQZTy7qsyawsgw4NWEY4zSaBolg9rrvw-DrnBoF8L"/>
+<div class="flex flex-col">
+<h1 class="text-text-primary-light dark:text-text-primary-dark text-lg font-bold leading-tight tracking-tight">KasirAI</h1>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium">UMKM Owner Mode</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined filled" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<p class="text-sm font-bold leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">receipt_long</span>
+<p class="text-sm font-medium leading-normal group-hover:text-text-primary-light dark:group-hover:text-text-primary-dark">Penjualan</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">inventory_2</span>
+<p class="text-sm font-medium leading-normal group-hover:text-text-primary-light dark:group-hover:text-text-primary-dark">Inventaris</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">loyalty</span>
+<p class="text-sm font-medium leading-normal group-hover:text-text-primary-light dark:group-hover:text-text-primary-dark">Loyalty</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<p class="text-sm font-medium leading-normal group-hover:text-text-primary-light dark:group-hover:text-text-primary-dark">Pengaturan</p>
+</a>
+</nav>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 border-t border-[#e7ebf3] dark:border-[#2d3748] mt-auto">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Profile picture of the business owner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCev7aKk_cwnKM4bNuJuw9ur63fPQGGKnHvcySqNbsSgW3s6ShBCSTRgWuenuuyMzkq_SnEVyhuyWF08uf1XIEsOjDX0uSW6JnnFvauAlr8-gBF_5VDF88JY3XuwEOfB7ZlOD6tWhpLy-oNLEkJQtj2JkVWqHUISj-nemcUSUMBeFYOxjAQfysOVDz7opsTqBgHhoFeYmlYe6f02fUXNUNwYn-GEUJrndeh6FuozehQYAF7aNLh8z2Fu_apwvD1VBToCHGvpRJAijI8");'>
+</div>
+<div class="flex flex-col">
+<p class="text-text-primary-light dark:text-text-primary-dark text-sm font-bold leading-normal">Budi Santoso</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs font-normal">Pemilik Toko</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<header class="sticky top-0 z-10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-[#e7ebf3] dark:border-[#2d3748] px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black leading-tight tracking-[-0.033em]">Selamat Pagi, Pak Budi 👋</h2>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal">Senin, 24 Oktober 2023 • Cabang Jakarta Selatan</p>
+</div>
+<div class="flex items-center gap-3 bg-white dark:bg-surface-dark p-1 rounded-xl shadow-sm border border-[#e7ebf3] dark:border-[#2d3748]">
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold shadow-md transition-transform active:scale-95">Hari Ini</button>
+<button class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium transition-colors">Minggu Ini</button>
+<button class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium transition-colors">Bulan Ini</button>
+<div class="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<button class="px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark transition-colors">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</button>
+</div>
+</header>
+<div class="p-6 flex flex-col gap-6 max-w-[1400px] mx-auto w-full">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-3 rounded-xl p-5 bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="flex items-center text-accent-green bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded text-xs font-bold">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +15%
+                        </span>
+</div>
+<div>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium">Total Penjualan</p>
+<h3 class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black tracking-tight mt-1">Rp 12.500.000</h3>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-xl p-5 bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<span class="flex items-center text-accent-green bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded text-xs font-bold">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +12%
+                        </span>
+</div>
+<div>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium">Net Revenue</p>
+<h3 class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black tracking-tight mt-1">Rp 11.125.000</h3>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-xl p-5 bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<span class="flex items-center text-text-secondary-light dark:text-text-secondary-dark bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-xs font-bold">
+                            PPN 11%
+                        </span>
+</div>
+<div>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium">Pajak Terutang</p>
+<h3 class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black tracking-tight mt-1">Rp 1.375.000</h3>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-xl p-5 bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined">receipt</span>
+</div>
+<span class="flex items-center text-accent-red bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded text-xs font-bold">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_down</span> -2%
+                        </span>
+</div>
+<div>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium">Total Transaksi</p>
+<h3 class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black tracking-tight mt-1">42</h3>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 rounded-xl bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] shadow-sm p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-text-primary-light dark:text-text-primary-dark text-lg font-bold">Tren Penjualan &amp; Diskon</h3>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">Perbandingan pendapatan kotor vs potongan harga</p>
+</div>
+<div class="flex items-center gap-2 text-xs font-medium">
+<span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-primary"></span> Penjualan</span>
+<span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span> Diskon</span>
+</div>
+</div>
+<div class="flex-1 flex items-end justify-between gap-2 h-64 w-full">
+<div class="hidden sm:flex flex-col justify-between h-full text-xs text-text-secondary-light dark:text-text-secondary-dark pr-2 border-r border-dashed border-gray-200 dark:border-gray-700">
+<span>15jt</span>
+<span>10jt</span>
+<span>5jt</span>
+<span>0</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-full relative">
+<div class="w-3 bg-orange-400/80 rounded-t-sm h-[10%] group-hover:bg-orange-400 transition-colors"></div>
+<div class="w-5 bg-primary/80 rounded-t-sm h-[40%] group-hover:bg-primary transition-colors"></div>
+</div>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">08:00</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-full relative">
+<div class="w-3 bg-orange-400/80 rounded-t-sm h-[15%] group-hover:bg-orange-400 transition-colors"></div>
+<div class="w-5 bg-primary/80 rounded-t-sm h-[55%] group-hover:bg-primary transition-colors"></div>
+</div>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">10:00</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-full relative">
+<div class="w-3 bg-orange-400/80 rounded-t-sm h-[20%] group-hover:bg-orange-400 transition-colors"></div>
+<div class="w-5 bg-primary/80 rounded-t-sm h-[85%] group-hover:bg-primary transition-colors"></div>
+</div>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark font-bold text-primary">12:00</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-full relative">
+<div class="w-3 bg-orange-400/80 rounded-t-sm h-[12%] group-hover:bg-orange-400 transition-colors"></div>
+<div class="w-5 bg-primary/80 rounded-t-sm h-[60%] group-hover:bg-primary transition-colors"></div>
+</div>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">14:00</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-full relative">
+<div class="w-3 bg-orange-400/80 rounded-t-sm h-[8%] group-hover:bg-orange-400 transition-colors"></div>
+<div class="w-5 bg-primary/80 rounded-t-sm h-[45%] group-hover:bg-primary transition-colors"></div>
+</div>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">16:00</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-full relative">
+<div class="w-3 bg-orange-400/80 rounded-t-sm h-[25%] group-hover:bg-orange-400 transition-colors"></div>
+<div class="w-5 bg-primary/80 rounded-t-sm h-[70%] group-hover:bg-primary transition-colors"></div>
+</div>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">18:00</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-full relative">
+<div class="w-3 bg-orange-400/80 rounded-t-sm h-[5%] group-hover:bg-orange-400 transition-colors"></div>
+<div class="w-5 bg-primary/80 rounded-t-sm h-[30%] group-hover:bg-primary transition-colors"></div>
+</div>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">20:00</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<div class="rounded-xl bg-primary text-white p-6 shadow-lg shadow-primary/20 relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-center mb-4">
+<div class="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+<span class="material-symbols-outlined">loyalty</span>
+</div>
+<span class="text-xs font-bold bg-white text-primary px-2 py-1 rounded">High Impact</span>
+</div>
+<div class="flex flex-col gap-1 mb-6">
+<p class="text-white/80 text-sm font-medium">Loyalty ROI</p>
+<h3 class="text-4xl font-black">240%</h3>
+<p class="text-white/80 text-xs">Setiap Rp 1.000 diskon poin menghasilkan Rp 2.400 penjualan tambahan.</p>
+</div>
+<button class="w-full py-2 bg-white text-primary text-sm font-bold rounded-lg hover:bg-gray-50 transition-colors">
+                                Kelola Program Poin
+                            </button>
+</div>
+</div>
+<div class="rounded-xl bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] shadow-sm p-6 flex-1">
+<h4 class="text-text-primary-light dark:text-text-primary-dark font-bold text-base mb-4">Dampak Diskon</h4>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-xs font-medium">
+<span class="text-text-secondary-light dark:text-text-secondary-dark">Diskon Member</span>
+<span class="text-text-primary-light dark:text-text-primary-dark">Rp 450.000</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-xs font-medium">
+<span class="text-text-secondary-light dark:text-text-secondary-dark">Promo Flash Sale</span>
+<span class="text-text-primary-light dark:text-text-primary-dark">Rp 120.000</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-orange-400 h-2 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-xs font-medium">
+<span class="text-text-secondary-light dark:text-text-secondary-dark">Voucher Karyawan</span>
+<span class="text-text-primary-light dark:text-text-primary-dark">Rp 45.000</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-gray-400 h-2 rounded-full" style="width: 10%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<div class="bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl shadow-md min-h-[300px] overflow-hidden relative group" data-alt="Abstract gradient background representing AI analysis" style='background-image: linear-gradient(180deg, rgba(19, 91, 236, 0.1) 0%, rgba(16, 22, 34, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5iELLKKYWlQvldNEQump4ViF6kvhtG7WKiFJA55hDEcsGRbjLMCx5JijtooBtpRlKkcaDhtAG8oF6Ev8sClOObPHWYEPi9hfHWdxV618DeqQodbdF4Du6mWpXYlcS3JhTpAde7sDJXZuvRE-AAZOySLR3bjuIytP1UTYXvEBPHfWka9maby8RALRro3jqgQ0tM9aFmZCem9kuot2zcnZZCSEXl2gs6B3Ax2ZlVR-J1AIBXxI1staS-3DXp4rhygZGFxHzMcSfLM_e");'>
+<div class="absolute top-4 left-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-300 text-sm">lightbulb</span>
+<span class="text-white text-xs font-bold tracking-wide">AI INSIGHT</span>
+</div>
+<div class="flex w-full flex-col gap-4 p-6 z-10">
+<div class="flex flex-col gap-2">
+<p class="text-white text-2xl font-bold leading-tight">Peluang Penjualan Sore Ini</p>
+<p class="text-gray-200 text-sm font-medium leading-relaxed">
+                                Analisis kami menunjukkan produk <span class="text-white font-bold">'Kopi Susu Gula Aren'</span> laku keras saat cuaca mendung seperti hari ini. Stok anda menipis (sisa 12 cup), pertimbangkan restock segera.
+                            </p>
+</div>
+<button class="flex w-full md:w-auto cursor-pointer items-center justify-center rounded-lg h-10 px-6 bg-primary hover:bg-blue-600 text-white text-sm font-bold transition-colors">
+                            Lihat Inventaris
+                        </button>
+</div>
+</div>
+<div class="xl:col-span-2 rounded-xl bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] shadow-sm p-6 flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-text-primary-light dark:text-text-primary-dark text-lg font-bold">Transaksi Terakhir</h3>
+<a class="text-primary text-sm font-bold hover:underline" href="#">Lihat Semua</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full min-w-[500px]">
+<thead>
+<tr class="border-b border-[#e7ebf3] dark:border-[#2d3748]">
+<th class="text-left py-3 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">ID</th>
+<th class="text-left py-3 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">Waktu</th>
+<th class="text-left py-3 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">Item</th>
+<th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">Total</th>
+<th class="text-center py-3 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e7ebf3] dark:divide-[#2d3748]">
+<tr class="group hover:bg-background-light dark:hover:bg-gray-800/50 transition-colors">
+<td class="py-3 px-4 text-sm font-medium text-text-primary-light dark:text-text-primary-dark">#TRX-042</td>
+<td class="py-3 px-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">14:24</td>
+<td class="py-3 px-4 text-sm text-text-primary-light dark:text-text-primary-dark">2x Americano, 1x Croissant</td>
+<td class="py-3 px-4 text-sm font-bold text-text-primary-light dark:text-text-primary-dark text-right">Rp 85.000</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Sukses
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-background-light dark:hover:bg-gray-800/50 transition-colors">
+<td class="py-3 px-4 text-sm font-medium text-text-primary-light dark:text-text-primary-dark">#TRX-041</td>
+<td class="py-3 px-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">14:10</td>
+<td class="py-3 px-4 text-sm text-text-primary-light dark:text-text-primary-dark">1x Latte (Oat Milk)</td>
+<td class="py-3 px-4 text-sm font-bold text-text-primary-light dark:text-text-primary-dark text-right">Rp 42.000</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Sukses
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-background-light dark:hover:bg-gray-800/50 transition-colors">
+<td class="py-3 px-4 text-sm font-medium text-text-primary-light dark:text-text-primary-dark">#TRX-040</td>
+<td class="py-3 px-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">13:55</td>
+<td class="py-3 px-4 text-sm text-text-primary-light dark:text-text-primary-dark">3x Mie Goreng Spesial</td>
+<td class="py-3 px-4 text-sm font-bold text-text-primary-light dark:text-text-primary-dark text-right">Rp 105.000</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                            Pending
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-background-light dark:hover:bg-gray-800/50 transition-colors">
+<td class="py-3 px-4 text-sm font-medium text-text-primary-light dark:text-text-primary-dark">#TRX-039</td>
+<td class="py-3 px-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">13:42</td>
+<td class="py-3 px-4 text-sm text-text-primary-light dark:text-text-primary-dark">1x Es Teh Manis</td>
+<td class="py-3 px-4 text-sm font-bold text-text-primary-light dark:text-text-primary-dark text-right">Rp 8.000</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Sukses
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

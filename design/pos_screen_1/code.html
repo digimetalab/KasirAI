@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KasirAI POS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-flex;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #334155;
+        }
+        #type_member:checked ~ .wrapper #member-flow-container {
+            display: flex;
+        }
+        #type_non:checked ~ .wrapper #member-flow-container {
+            display: none;
+        }#member_not_found:checked ~ .wrapper #member-search-results {
+            display: none;
+        }
+        #member_not_found:checked ~ .wrapper #member-registration-form {
+            display: flex;
+        }
+        #member_not_found:not(:checked) ~ .wrapper #member-registration-form {
+            display: none;
+        }
+        #member_not_found:not(:checked) ~ .wrapper #member-search-results {
+            display: block;
+        }#reg_success:checked ~ .wrapper #member-registration-form {
+            display: none !important;
+        }
+        #reg_success:checked ~ .wrapper #member-flow-container > .relative {
+            display: none !important;}
+        #reg_success:checked ~ .wrapper #member-success-message {
+            display: flex !important;
+        }
+        #reg_success:not(:checked) ~ .wrapper #member-success-message {
+            display: none;
+        }
+        #show_payment:checked ~ .wrapper .cart-view {
+            display: none;
+        }
+        #show_payment:checked ~ .wrapper .payment-view {
+            display: flex;
+        }
+        #pay_cash:checked ~ .payment-methods #btn-cash { @apply bg-primary text-white border-primary; }
+        #pay_card:checked ~ .payment-methods #btn-card { @apply bg-primary text-white border-primary; }
+        #pay_ewallet:checked ~ .payment-methods #btn-ewallet { @apply bg-primary text-white border-primary; }
+        #pay_cash:checked ~ .payment-details #cash-details { display: block; }
+        #pay_card:checked ~ .payment-details #card-details { display: block; }
+        #pay_ewallet:checked ~ .payment-details #ewallet-details { display: block; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display h-screen w-screen overflow-hidden flex text-slate-900 dark:text-white antialiased selection:bg-primary/20">
+<main class="flex-1 flex flex-col h-full min-w-0 relative">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-[#151c2b] px-6 py-4 shrink-0 z-10">
+<div class="flex items-center gap-8 w-full">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-9 text-primary">
+<img alt="KasirAI Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiutJz-nk1ngGcnCyGNXgH28_beCV2mInznpsLrtworNXiNhWyaHEjGLW-QUAN3r2CwRxZmKKCIV-Hy534vs-7AAf34gkThEissId8Pb1cD0M7gv-dPing6XUe0Eq9uq2GPt3T7HLPOUjC6JIZZ7vynbc3aTOw3GaRfs_I6jFGqBI7d9o2EA4e1nVu2pRbNKmyplf2VkLKjsuVcY5Z0XDm1eH7XCI4ECtkbL8mtGyFqpFD-V_q4W3CzLnZ6nitSSLHQVxNGqiRtOHd"/>
+</div>
+<h2 class="text-xl font-extrabold leading-tight tracking-tight">KasirAI</h2>
+</div>
+<label class="flex flex-col flex-1 max-w-md ml-4">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-11 bg-slate-100 dark:bg-slate-800 transition-colors focus-within:ring-2 focus-within:ring-primary/20">
+<div class="text-slate-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden bg-transparent text-slate-900 dark:text-white focus:outline-0 border-none h-full placeholder:text-slate-400 px-3 text-base font-normal leading-normal" placeholder="Cari produk (Scan Barcode / ketik nama)..." value=""/>
+<div class="text-slate-400 flex items-center justify-center pr-3 cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">barcode_scanner</span>
+</div>
+</div>
+</label>
+<div class="flex items-center gap-4 ml-auto">
+<div class="hidden md:flex flex-col items-end mr-2">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Shift Pagi</span>
+<span class="text-xs font-medium text-slate-500">Sel, 24 Okt 10:45</span>
+</div>
+<button class="flex items-center justify-center rounded-lg size-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors relative">
+<span class="absolute top-2.5 right-2.5 size-2 bg-red-500 rounded-full border-2 border-slate-100 dark:border-slate-800"></span>
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-slate-200 dark:border-slate-700" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1Hh4JmfXzWWrB3JDQESWCzY1LiXb5v7pJcGvjAxErAUdS7J9XlVuGuNs5wOWb9Nfzc10MhAb0xnGi6-mf7bRNdjajW8028NX6Rd2j436pVatzCx-iQ0bUOeqOPxsBNue8WnwMJxPPnm-1xhtLLCNIUjJ8nMpJRseZwyuiWi6ZD6TL_K_SGOUccuBFi7BBsXaA39d1HRa2JTGKkY_zkywAZNQWHaR3tsIFxvUwV7XEtRQopGelDjfxH1O8HFLn2V0LTkj9XEL0yCpA");'></div>
+</div>
+</div>
+</header>
+<div class="px-6 py-4 shrink-0">
+<div class="flex gap-3 overflow-x-auto custom-scrollbar pb-2">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white pl-5 pr-5 shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+<p class="text-sm font-bold leading-normal">Semua</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-5 pr-5 hover:border-primary/50 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+<p class="text-sm font-medium leading-normal">Makanan</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-5 pr-5 hover:border-primary/50 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">local_cafe</span>
+<p class="text-sm font-medium leading-normal">Minuman</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-5 pr-5 hover:border-primary/50 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">cookie</span>
+<p class="text-sm font-medium leading-normal">Snack</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-5 pr-5 hover:border-primary/50 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">percent</span>
+<p class="text-sm font-medium leading-normal">Promo</p>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-6 pb-6 custom-scrollbar">
+<div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 pb-10">
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Nasi Goreng Spesial" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUM-C4pmUTFg3RkomHIotaLfejTAFgZNwHYkRownTO57A1xEI7OBVS4bq8jWV3QBrHBBa23zDFy7tPw28Lu1GqQyo2fiJ2Qny6eJAgYoGRQ7qeVXmJG0_edBZ_KObUyvpFDMqdcIAOjHHu6y2EU1F9ZpBZtJxtWCBSdlPEiyQznLtzc8-eeG1R5bZKprIxjJOIrcfyHguH0H_tOxL5tLJlZibEGBwj0OgEWNe46UGbOuyXnAj6cdbUNjyJC22cRu__8oVeKZVYQQIH");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Nasi Goreng Spesial</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 25.000</p>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Es Teh Manis" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXCZJ66z1I5tymoIzKtt91xCNpZ5srPgZcfeTUjZJfA_8aLKx-e1Ua7kdqtxmAElHUvyEYs3F4NaUQR0pF4tVrG-wSd1BRdFncKqT3eLFbcXnc2jIdQsTNNbYv_cIbo7Gvdk_Hz4HNkz2QgzaHk06lWtdszgkFO27Jx0-yyweAvgvaqB80gWU52BuD3NBCFqhRRUDWcWKQrsajSixQWtStaQ5h20IPLFu1gCFM0NN8llCseLTeODgPbzV6ZGpUA0ueZ3jnluR0AT-b");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Es Teh Manis</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 5.000</p>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Ayam Bakar Madu" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAArDlSzXBMfTs9d9Ck3566PhE7cpoypyZiUq1qtZqjkr3JhwqGPi6rhmcpucyNyrIyESQs3X_0nWphNTi_RMmeJh0OqKk5D9KiOdD7l5F0AzvbYs7juyhjL4-9vTE4FsXMBagmct2MrKmYdAkXPxCs5_jI1dvTQu2WUcfrXwNU0ZQbRAUAdHrWfaBDif8eD3Ok3Yep5YMnzSIwAsIHWiX_FQIvFiDtEJLotzRtRGk3i74yXQLXbz2lv9-ckgbabTdbcrgAaiZ3Axo-");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Ayam Bakar Madu</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 30.000</p>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Kopi Susu Aren" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA18BnYqJ5orYKiWd8PzpxSStfhBaoyB6Erc0pSNIiC3oxU8ZGUqMEZNwHcB8Lo8z0lwb3lh-xollhW7eT-6_lrVeLwKyrP4XS5Ejn1Cqejhmgp0cR90dZVHCVOofotM9YOnbjhEl_X-5H_agJndHxcyGlAyKswHyJOKE1_L9ZbFOqwnOZ-jCjqR7TwLHcOCa5wd_8gzP7hx-TRiJDR_nIP6p0xSJfWZolPP1c7dwjrYFXksS83wL1nE5MEeUAZICCDXtsfzg6zwqVL");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Kopi Susu Aren</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 18.000</p>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Sate Ayam" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_57_1BRfIvU6El_2FV0bjyTWGYO37aBKGDSpqgAO-7ROehK3Wgj4BqEZAk6FYEQnu2Qo1jII2v-DweZfKKKiviolCyusK6NbE6ZDl7EaQUkZztlnmlr8aO_hoop_cpq986DJMoEIfi3n8rL8g_usPo3iwzUYjLPrcHvxBdrR1UNDVVPs7zfHCGFf3KpCx3kna6tvEU06c97jQqlcj9qgJh5acjpeO7iAMiDplIgBVX6LvJfRlRPdRRJij_X9WhcC_UOURufH9YxfT");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Sate Ayam</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 22.000</p>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Kerupuk Putih" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDiqJPpJ2ehZWHLe5gC3FUnzny9cY8Sm9k-bilgvmImsdghvP8eBQRFtL5I_4tdVv3YiE-PQUacg8Jws5clpB_k8Mjhtdw_a0Aa6RDyH3h01kFJj2Z1dKgSRyu42AWxzjEByDCo1K7y9aon4FsEBTfmxQlRODGCFlBFFzgWeMpUaDYgftbqmGXi8BXCY6pLA69nbq1mvq7kZdWN9ZpRx13iKgOLg4njEiTVZmRqaGhI0bPM8kiPbrYDd0sz8E52TIbzDeGdDTcMB8AI");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Kerupuk Putih</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 2.000</p>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Mie Goreng Pedas" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcsZccCKRSvOZnsIxhnVPDRRr-HDgPzwHGYfCeBUGGIAa0SW322kFa76CkLUMWhwzbUDOS4aGwCHUy_bjgtXzzQtE2Jj3zu5Mn40MSQcjLHElvzPAXJXgI6k4bFCN9oZ6sbqdOpwj5_y31mrU2Mb3DnbchSeLmjnZ4B2B0Mbs0m76AAyxR_A444xEqh--32lH6Wmj9hU9NazYRtZ57Q6XQybENZaJZjtQpgWBTlrM5jZgZk9UxWJOuRWpHpfTrklo9EjemMo7TAQyt");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Mie Goreng Pedas</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 20.000</p>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden relative">
+<div class="w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Jus Jeruk Segar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCK9PoFWmrPA1eAcM6tY-n27W3hU6Y7ICxus9-cYlQhj8ige8WBrGKozEfLa-t5cGU_oM3IpXyGXcqusfVncA3zhVDdo35jJRQTbu__Baw6c7agDtKTvQJAdsbWbwPmTE3_YuD2TpzxUGPnd8Tdt_93qwlYsj3kzspa0Ic2-mtNZ2eCLrW80bUbJ_eyGJdk401iMOg59RJC7yeKCQ4vg29la3oN6217GxA_YfNnPBlSUauTH9j6QCVyUDJHeomjgy8eSMUjnBouVKsX");'></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+<button class="absolute bottom-3 right-3 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined text-[20px] block">add</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-1 flex-1">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-snug line-clamp-2 mb-1">Jus Jeruk Segar</p>
+<div class="mt-auto pt-1">
+<p class="text-primary text-xl font-extrabold leading-tight tracking-tight">Rp 12.000</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-[420px] bg-white dark:bg-[#151c2b] border-l border-slate-200 dark:border-slate-800 h-full shadow-2xl z-20 shrink-0 relative group">
+<input checked="" class="peer/member hidden" id="type_member" name="transaction_type" type="radio"/>
+<input class="peer/non hidden" id="type_non" name="transaction_type" type="radio"/>
+<input checked="" class="hidden" id="member_not_found" type="checkbox"/>
+<input checked="" class="hidden" id="reg_success" type="checkbox"/>
+<input class="hidden" id="show_payment" type="checkbox"/>
+<div class="flex flex-col h-full w-full peer-checked/member:[&amp;_#btn-member]:bg-white peer-checked/member:[&amp;_#btn-member]:dark:bg-slate-700 peer-checked/member:[&amp;_#btn-member]:text-primary peer-checked/member:[&amp;_#btn-member]:shadow-sm peer-checked/non:[&amp;_#btn-non]:bg-white peer-checked/non:[&amp;_#btn-non]:dark:bg-slate-700 peer-checked/non:[&amp;_#btn-non]:text-primary peer-checked/non:[&amp;_#btn-non]:shadow-sm peer-checked/non:[&amp;_#member-flow-container]:hidden peer-checked/non:[&amp;_#non-member-display]:flex peer-checked/non:[&amp;_#loyalty-section]:hidden peer-checked/member:[&amp;_#btn-non]:text-slate-500 peer-checked/non:[&amp;_#btn-member]:text-slate-500 wrapper">
+<div class="cart-view flex flex-col h-full">
+<div class="p-6 pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0 relative z-30">
+<div class="flex items-center justify-between mb-4">
+<h1 class="text-slate-900 dark:text-white text-[22px] font-extrabold leading-tight tracking-[-0.015em]">Keranjang</h1>
+<div class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">Order #2049</div>
+</div>
+<div class="grid grid-cols-2 bg-slate-100 dark:bg-slate-900/50 p-1 rounded-lg mb-4 gap-1">
+<label class="cursor-pointer text-center py-2.5 rounded-md text-sm font-bold transition-all duration-200" for="type_member" id="btn-member">
+                        Transaksi Member
+                    </label>
+<label class="cursor-pointer text-center py-2.5 rounded-md text-sm font-bold transition-all duration-200" for="type_non" id="btn-non">
+                        Non-Member
+                    </label>
+</div>
+<div class="flex flex-col gap-2" id="member-flow-container">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input class="w-full pl-10 pr-10 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow placeholder:text-slate-400 text-slate-900 dark:text-white" placeholder="Cari member (Nama / No. HP)..." type="text" value="Budi"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+</div>
+</div>
+<div class="mt-1" id="member-search-results">
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xl shadow-slate-200/60 dark:shadow-black/40 overflow-hidden flex flex-col z-10 relative">
+<div class="px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+<span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Hasil Pencarian</span>
+<span class="text-[10px] font-medium text-primary cursor-pointer hover:underline">Lihat Semua</span>
+</div>
+<div class="max-h-[200px] overflow-y-auto custom-scrollbar">
+<div class="p-2 border-b border-slate-50 dark:border-slate-800/50 hover:bg-blue-50/50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors group flex items-center gap-3">
+<div class="size-9 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs shrink-0 border border-blue-200 dark:border-blue-800">BS</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-0.5">
+<p class="text-sm font-bold text-slate-900 dark:text-white truncate">Budi Santoso</p>
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800">Gold</span>
+</div>
+<p class="text-xs text-slate-500 font-medium truncate">0812-3456-7890</p>
+</div>
+<button class="size-8 rounded-full flex items-center justify-center text-slate-300 hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+</div>
+<div class="p-2 hover:bg-blue-50/50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors group flex items-center gap-3">
+<div class="size-9 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold text-xs shrink-0 border border-purple-200 dark:border-purple-800">WA</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-0.5">
+<p class="text-sm font-bold text-slate-900 dark:text-white truncate">Wati Anggraeni</p>
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600">Silver</span>
+</div>
+<p class="text-xs text-slate-500 font-medium truncate">0813-9988-7766</p>
+</div>
+<button class="size-8 rounded-full flex items-center justify-center text-slate-300 hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+</button>
+</div>
+</div>
+<div class="p-2 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-700">
+<label class="flex items-center justify-center gap-2 w-full py-2 rounded-lg border border-dashed border-slate-300 dark:border-slate-600 hover:border-primary text-slate-500 hover:text-primary hover:bg-white dark:hover:bg-slate-800 cursor-pointer text-xs font-bold transition-all group/btn" for="member_not_found">
+<span class="material-symbols-outlined text-[18px] group-hover/btn:scale-110 transition-transform">person_add</span>
+                                    Member tidak ditemukan? Daftar Baru
+                                </label>
+</div>
+</div>
+</div>
+<div class="hidden flex-col gap-4 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 mt-2 animate-fade-in" id="member-registration-form">
+<div class="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-700">
+<h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">person_add</span>
+                                Registrasi Member Baru
+                            </h3>
+<label class="text-xs font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 cursor-pointer flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded-lg transition-all hover:bg-slate-100 dark:hover:bg-slate-700" for="member_not_found">
+<span class="material-symbols-outlined text-[16px]">close</span>
+                                Batal
+                            </label>
+</div>
+<div class="space-y-3">
+<div class="grid grid-cols-1 gap-1">
+<label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Nama Lengkap</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-[18px]">badge</span>
+<input class="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-shadow placeholder:text-slate-400" placeholder="Nama member..." type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-1">
+<label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Nomor Telepon</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-[18px]">smartphone</span>
+<input class="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-shadow placeholder:text-slate-400" placeholder="08xxxxxxxxxx" type="tel"/>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-1">
+<label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tanggal Lahir</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-[18px]">cake</span>
+<input class="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-shadow text-slate-700 dark:text-slate-200" type="date"/>
+</div>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full h-11 bg-primary hover:bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                                Simpan &amp; Pilih
+                            </button>
+</div>
+</div>
+<div class="hidden flex-col items-center text-center gap-4 bg-green-50 dark:bg-green-900/10 p-5 rounded-xl border border-green-200 dark:border-green-800 animate-fade-in" id="member-success-message">
+<div class="size-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-1 ring-4 ring-green-50 dark:ring-green-900/20">
+<span class="material-symbols-outlined text-[36px] text-green-600 dark:text-green-400">check_circle</span>
+</div>
+<div class="space-y-1">
+<h3 class="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">Member Berhasil Ditambahkan!</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 max-w-[240px] mx-auto">Data member baru telah berhasil disimpan ke database.</p>
+</div>
+<div class="w-full bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-3 flex items-center gap-3 shadow-sm text-left">
+<div class="size-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary dark:text-blue-400 flex items-center justify-center font-bold text-sm shrink-0 border border-blue-200 dark:border-blue-800">DP</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold text-slate-900 dark:text-white truncate">Dimas Pratama</p>
+<p class="text-xs text-slate-500 font-medium truncate">0812-3456-7890</p>
+</div>
+<div class="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-[10px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
+                                Classic
+                            </div>
+</div>
+<div class="w-full flex flex-col gap-2 pt-1">
+<button class="w-full h-11 bg-primary hover:bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+                                Lanjutkan Transaksi
+                            </button>
+<label class="w-full h-9 flex items-center justify-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white cursor-pointer transition-colors" for="reg_success">
+                                Lihat Detail Member
+                            </label>
+</div>
+</div>
+</div>
+<div class="hidden w-full items-center justify-between p-3 h-11 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-700" id="non-member-display">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">person_off</span>
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400">Transaksi Tamu (Umum)</span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-5 custom-scrollbar">
+<div class="flex gap-3 group">
+<div class="w-16 h-16 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-slate-100 dark:border-slate-700" data-alt="Nasi Goreng thumbnail" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDypSK45IrjO3GiO9y7xXjBpINRYtQAajU9Re1V9XM7tAGv6Ap_MnP4QkxHXR_B1WNKwkrq8yuD1UzjZAXCr0XqwNhxfjxIYXOrjXwSVI74pnlo6cjYOwBLDlmuePzvbebUTME0dcY4Lboho1dZpEH56kp4swLbWwcDMeFLe66YaDvscQkek_cjgNGacGRJC3lgwrbES6jVfelcZoqgFmshArR8e15wf2MjuCUUhU8zO7k_Pu0wYSc_3i-KKWuVcdgpYowjF-VckGE7");'></div>
+<div class="flex flex-col flex-1 justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white line-clamp-1">Nasi Goreng Spesial</p>
+<p class="text-xs text-slate-500 font-medium">@ Rp 25.000</p>
+</div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Rp 50.000</p>
+</div>
+<div class="flex items-center justify-between mt-1">
+<button class="text-xs text-slate-400 hover:text-primary flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span>Pedas, tanpa acar</span>
+</button>
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 rounded-md p-1 h-8">
+<button class="size-6 flex items-center justify-center bg-white dark:bg-slate-700 rounded text-slate-600 dark:text-slate-300 hover:text-primary shadow-sm">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<span class="text-sm font-bold w-4 text-center">2</span>
+<button class="size-6 flex items-center justify-center bg-primary text-white rounded shadow-sm shadow-primary/30">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-3 group">
+<div class="w-16 h-16 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-slate-100 dark:border-slate-700" data-alt="Kerupuk thumbnail" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrlvjdn8JyUiTbhXGP-kIbEZkK4S6Mw38PkxxUaKU2dzhkVqzBRDdU16K9A0e3ntpuBdUCRyovnSGIpgZ2YpliLt8gA_gTL4yl6EilUaAfxB2gRTTWhLjvR6WPXIIOrPf5ibSofSqcmp0QSrnJ2qwVOdTEhNJ2DCwkJ3f_BSwfaAt_AzPZIdVvRisNhPsLvowe9xQK92u00Ku_2HeQqYXU9NXuyXkipdKuqyKaNUYW98M5OWp8zsOw71RZg33CDYhISiQ5IybvexeA");'></div>
+<div class="flex flex-col flex-1 justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white line-clamp-1">Kerupuk Putih</p>
+<p class="text-xs text-slate-500 font-medium">@ Rp 2.000</p>
+</div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Rp 2.000</p>
+</div>
+<div class="flex items-center justify-between mt-1">
+<button class="text-xs text-slate-400 hover:text-primary flex items-center gap-1 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span>Catatan</span>
+</button>
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 rounded-md p-1 h-8">
+<button class="size-6 flex items-center justify-center bg-white dark:bg-slate-700 rounded text-slate-600 dark:text-slate-300 hover:text-primary shadow-sm">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="size-6 flex items-center justify-center bg-white dark:bg-slate-700 rounded text-slate-600 dark:text-slate-300 hover:text-primary shadow-sm">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-3 group">
+<div class="w-16 h-16 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-slate-100 dark:border-slate-700" data-alt="Es Teh thumbnail" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDh7N4q-D4yyuHGiMtNlrD9oW2xx5MV0_Qrzd3FDY9AYDTJl9qq_D-Sk--D7VZrXO1f4B35AfpHApZUuLr1LGE6dial0OASKOHJBk9PA2kn8U_jf-_NDcyTp7iuAqlFz04LstN3T9PKv2M4TxN-cIlZpzj4QSpSdCM19qEG8vVcazkAKWCyYze51qDQ5O61MsgVFOYt3rXAm8JKVT3JLhhBq94SoMcplVANUsCi1waRPP66EPOg1VaM4VLn4kUmIShCE4p4wm4CTg2v");'></div>
+<div class="flex flex-col flex-1 justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white line-clamp-1">Es Teh Manis</p>
+<p class="text-xs text-slate-500 font-medium">@ Rp 5.000</p>
+</div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Rp 5.000</p>
+</div>
+<div class="flex items-center justify-between mt-1">
+<button class="text-xs text-slate-400 hover:text-primary flex items-center gap-1 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span>Catatan</span>
+</button>
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 rounded-md p-1 h-8">
+<button class="size-6 flex items-center justify-center bg-white dark:bg-slate-700 rounded text-slate-600 dark:text-slate-300 hover:text-red-500 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="size-6 flex items-center justify-center bg-white dark:bg-slate-700 rounded text-slate-600 dark:text-slate-300 hover:text-primary shadow-sm">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800 shrink-0 space-y-3">
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500 font-medium">Subtotal</span>
+<span class="text-slate-900 dark:text-white font-bold">Rp 57.000</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500 font-medium flex items-center gap-1">
+                        Diskon
+                        <span class="material-symbols-outlined text-[16px] text-slate-400 cursor-pointer">edit</span>
+</span>
+<span class="text-green-600 font-bold">- Rp 0</span>
+</div>
+<div class="flex justify-between items-center text-sm" id="loyalty-section">
+<div class="flex items-center gap-2">
+<span class="text-slate-500 font-medium">Poin Loyalty</span>
+<div class="flex items-center gap-2 bg-yellow-100 dark:bg-yellow-900/30 px-2 py-0.5 rounded text-[10px] font-bold text-yellow-700 dark:text-yellow-500">
+<span class="material-symbols-outlined text-[12px]">stars</span>
+                            500 Pts
+                        </div>
+</div>
+<div class="relative inline-block w-9 mr-1 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 checked:right-0 checked:border-primary" id="toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-4 rounded-full bg-slate-300 cursor-pointer" for="toggle"></label>
+</div>
+</div>
+<div class="flex justify-between items-center text-sm pb-2 border-b border-dashed border-slate-300 dark:border-slate-700">
+<span class="text-slate-500 font-medium">Pajak (11%)</span>
+<span class="text-slate-900 dark:text-white font-bold">Rp 6.270</span>
+</div>
+<div class="flex justify-between items-end pt-1">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-500">Total Akhir</span>
+<span class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Rp 63.270</span>
+</div>
+</div>
+<label class="w-full mt-2 bg-primary hover:bg-blue-600 text-white font-bold h-14 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-between px-6 transition-all active:scale-[0.98] cursor-pointer" for="show_payment">
+<span class="flex items-center gap-2 text-white/90">
+<span class="material-symbols-outlined">payments</span>
+                        Bayar
+                    </span>
+<span class="text-lg">Rp 63.270</span>
+</label>
+</div>
+</div>
+<div class="payment-view hidden flex-col h-full bg-white dark:bg-[#151c2b] relative">
+<input checked="" class="hidden" id="pay_cash" name="payment_method" type="radio"/>
+<input class="hidden" id="pay_card" name="payment_method" type="radio"/>
+<input class="hidden" id="pay_ewallet" name="payment_method" type="radio"/>
+<div class="p-6 pb-2 border-b border-slate-100 dark:border-slate-800 shrink-0">
+<div class="flex items-center gap-4 mb-6">
+<label class="cursor-pointer text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors" for="show_payment">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</label>
+<h1 class="text-slate-900 dark:text-white text-[20px] font-extrabold leading-tight">Pembayaran</h1>
+</div>
+<div class="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 border border-slate-200 dark:border-slate-700 mb-2">
+<p class="text-sm text-slate-500 font-medium mb-1">Total Tagihan</p>
+<p class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Rp 63.270</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar">
+<p class="text-sm font-bold text-slate-900 dark:text-white mb-3">Metode Pembayaran</p>
+<div class="payment-methods grid grid-cols-3 gap-3 mb-6">
+<label class="flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-primary/50 transition-all" for="pay_cash" id="btn-cash">
+<span class="material-symbols-outlined text-[24px]">payments</span>
+<span class="text-xs font-bold">Tunai</span>
+</label>
+<label class="flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-primary/50 transition-all" for="pay_card" id="btn-card">
+<span class="material-symbols-outlined text-[24px]">credit_card</span>
+<span class="text-xs font-bold">Kartu</span>
+</label>
+<label class="flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-primary/50 transition-all" for="pay_ewallet" id="btn-ewallet">
+<span class="material-symbols-outlined text-[24px]">account_balance_wallet</span>
+<span class="text-xs font-bold">E-Wallet</span>
+</label>
+</div>
+<div class="payment-details">
+<div class="hidden animate-fade-in" id="cash-details">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Uang Diterima</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">Rp</span>
+<input class="w-full h-12 pl-12 pr-4 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="0" type="text" value="70.000"/>
+</div>
+<div class="flex gap-2 mt-2 overflow-x-auto pb-1 custom-scrollbar">
+<button class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors whitespace-nowrap">Uang Pas</button>
+<button class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors whitespace-nowrap">Rp 70.000</button>
+<button class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors whitespace-nowrap">Rp 100.000</button>
+</div>
+</div>
+<div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-900/30 flex justify-between items-center">
+<span class="text-sm font-medium text-blue-900 dark:text-blue-100">Kembalian</span>
+<span class="text-xl font-extrabold text-blue-700 dark:text-blue-300">Rp 6.730</span>
+</div>
+</div>
+</div>
+<div class="hidden" id="card-details">
+<div class="flex flex-col items-center justify-center p-8 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-center">
+<span class="material-symbols-outlined text-[48px] text-slate-300 mb-2">point_of_sale</span>
+<p class="text-sm font-medium text-slate-500">Silahkan gesek atau masukkan kartu pada mesin EDC.</p>
+<input class="mt-4 w-full h-10 px-3 text-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm" placeholder="Nomor Ref / Approval Code (Opsional)" type="text"/>
+</div>
+</div>
+<div class="hidden" id="ewallet-details">
+<div class="grid grid-cols-2 gap-3 mb-4">
+<button class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all">
+<div class="w-6 h-6 bg-blue-500 rounded-full"></div>
+<span class="text-sm font-bold">GoPay</span>
+</button>
+<button class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all">
+<div class="w-6 h-6 bg-green-500 rounded-full"></div>
+<span class="text-sm font-bold">OVO</span>
+</button>
+<button class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all">
+<div class="w-6 h-6 bg-blue-400 rounded-full"></div>
+<span class="text-sm font-bold">Dana</span>
+</button>
+<button class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all">
+<div class="w-6 h-6 bg-orange-500 rounded-full"></div>
+<span class="text-sm font-bold">ShopeePay</span>
+</button>
+</div>
+<div class="flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-center">
+<span class="material-symbols-outlined text-[48px] text-slate-300 mb-2">qr_code_scanner</span>
+<p class="text-sm font-medium text-slate-500">Scan QRIS Pelanggan</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 pt-4 bg-white dark:bg-[#151c2b] border-t border-slate-200 dark:border-slate-800 shrink-0">
+<div class="flex items-center gap-3 mb-4">
+<input checked="" class="w-4 h-4 text-primary bg-slate-100 border-slate-300 rounded focus:ring-primary focus:ring-2" id="print_receipt" type="checkbox"/>
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 select-none cursor-pointer" for="print_receipt">Cetak Struk Otomatis</label>
+</div>
+<button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold h-12 rounded-xl shadow-lg shadow-green-600/30 flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">check_circle</span>
+                    Konfirmasi Pembayaran
+                </button>
+</div>
+</div>
+</div>
+</aside>
+
+</body></html>

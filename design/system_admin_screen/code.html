@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KasirAI - Pengaturan Umum</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#135bec",
+              "primary-hover": "#1d4ed8",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "card-light": "#ffffff",
+              "card-dark": "#1a2234",
+              "border-light": "#e2e8f0",
+              "border-dark": "#2d3748",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white h-screen flex overflow-hidden font-display transition-colors duration-200">
+<aside class="w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark flex flex-col justify-between shrink-0 z-20">
+<div class="flex flex-col gap-2 p-4">
+<div class="px-3 py-4 flex items-center gap-3 mb-2">
+<div class="w-10 h-10 shrink-0">
+<img alt="KasirAI Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7yl_eYKxTEby3k79QsLdvWWV-GjvU-GWEyNVsvdYyvB07JWCLef0lUacYH-_8d6Dl909JQCSf6A_i8SQxDuAEsf45Np_oMlvQB6QCbgTT7mNw7STEroTeanJHWtrRWE4uE_V0DsocwBSGv5D8dUlWCXc8TUJs7ZRoq5K3n-Nwf1m2_FWwSFZWMRQnwAX2hTsICGA9V6cFBITrDIbDsoQGmy-8TYSsg2vPUaOrnA3J7Mm9EjZmnmcCjr8XAF_Lv15_elFK7jxqpsbN"/>
+</div>
+<div>
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">KasirAI</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Panel Admin</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
+<span class="text-sm font-medium">Beranda</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">payments</span>
+<span class="text-sm font-medium">Kasir (POS)</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">inventory_2</span>
+<span class="text-sm font-medium">Stok Barang</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">analytics</span>
+<span class="text-sm font-medium">Laporan</span>
+</a>
+<div class="my-2 border-t border-border-light dark:border-border-dark"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-400" href="#">
+<span class="material-symbols-outlined filled-icon">settings</span>
+<span class="text-sm font-bold">Pengaturan</span>
+</a>
+</div>
+</div>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Administrator profile picture" class="w-full h-full object-cover" data-alt="Administrator profile picture showing a professional man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoJS1haQ-vjUqYvzU2nVAG5pkfgruRW6F2XPtoMZfK8VEjqFhAGbyTRYVdNQovttj0FZqrLS4_D72S9uFr726qBvGBcUcDMsOZ08TazKDEbI-y-rPs6hZzfGKeQy--dYaa3bzNetjBSMdm7U1zd_Wppt7T7dCElSCvJaFpxVb6nQLLbvigMfNQ_GTfRTPCVz5L59Sos6N8SVmBPCtrW9lxyJhSoLBd2SOD-2_Y1Jw2UrDGUTeL7gYATPIxsia5pGld5-qYH2ynnj1x"/>
+</div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-white text-sm font-semibold">Budi Santoso</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Pemilik Toko</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<header class="w-full px-8 py-5 flex flex-col gap-6 shrink-0 bg-background-light dark:bg-background-dark z-10">
+<nav class="flex items-center gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Beranda</a>
+<span class="text-slate-400">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Pengaturan</a>
+<span class="text-slate-400">/</span>
+<span class="text-slate-900 dark:text-white font-medium">Umum</span>
+</nav>
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div class="flex flex-col gap-1 max-w-2xl">
+<h1 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white">Pengaturan Umum</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base">Kelola koneksi aplikasi, fitur pintar, dan laporan pajak toko Anda.</p>
+</div>
+<button class="flex items-center justify-center gap-2 h-11 px-6 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-bold tracking-wide shadow-lg shadow-primary/25 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>Simpan Perubahan</span>
+</button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto px-8 pb-12">
+<div class="max-w-4xl flex flex-col gap-8">
+<section class="flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">hub</span>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Hubungkan Layanan</h2>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6 flex flex-col gap-6">
+<div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="flex-1 w-full">
+<label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    Notifikasi ke Telegram
+                                </label>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                                    Terima laporan penjualan langsung di chat Telegram Anda. Masukkan kode bot di sini.
+                                </p>
+<div class="flex w-full items-stretch rounded-lg shadow-sm">
+<input class="form-input flex-1 w-full rounded-l-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 text-sm font-mono" placeholder="Contoh: 123456789:ABC..." type="password" value="123456789:ABCdefGhIJKlmNoPQRstUvWxYz"/>
+<button class="flex items-center justify-center px-3 border border-l-0 border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+<button class="flex items-center justify-center px-4 rounded-r-lg border border-l-0 border-border-light dark:border-border-dark bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium transition-colors whitespace-nowrap">
+                                        Cek Koneksi
+                                    </button>
+</div>
+</div>
+</div>
+<div class="h-px bg-border-light dark:bg-border-dark w-full"></div>
+<div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="flex-1 w-full">
+<label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    Asisten Pintar (AI)
+                                </label>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                                    Aktifkan asisten untuk prediksi penjualan dan saran stok otomatis. Masukkan kunci API di sini.
+                                </p>
+<div class="flex w-full items-stretch rounded-lg shadow-sm">
+<input class="form-input flex-1 w-full rounded-l-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 text-sm font-mono" placeholder="Contoh: gsk_..." type="password" value="gsk_8A7bC9dEf0G1h2I3j4K5l6M7n8O9p0Q"/>
+<button class="flex items-center justify-center px-3 border border-l-0 border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+<button class="flex items-center justify-center px-4 rounded-r-lg border border-l-0 border-border-light dark:border-border-dark bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium transition-colors whitespace-nowrap">
+                                        Cek Koneksi
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">account_balance</span>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Laporan Pajak (Coretax)</h2>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white">Download Data Pajak</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                                    Unduh rekapan penjualan untuk lapor pajak. Format file sudah disesuaikan dengan standar Coretax DJP.
+                                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Pilih Tanggal</label>
+<div class="flex items-center gap-2">
+<div class="relative flex-1">
+<input class="w-full h-11 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-slate-900 dark:text-white text-sm px-3 focus:ring-primary focus:border-primary" type="date"/>
+</div>
+<span class="text-slate-400 text-sm">s/d</span>
+<div class="relative flex-1">
+<input class="w-full h-11 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-slate-900 dark:text-white text-sm px-3 focus:ring-primary focus:border-primary" type="date"/>
+</div>
+</div>
+</div>
+<div>
+<button class="w-full md:w-auto h-11 px-6 rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-primary text-slate-700 dark:text-slate-200 hover:text-primary dark:hover:text-primary font-bold text-sm transition-all flex items-center justify-center gap-2 bg-transparent">
+<span class="material-symbols-outlined">download</span>
+                                        Download File
+                                    </button>
+</div>
+</div>
+<div class="mt-2 flex items-center gap-2 text-xs text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400 px-3 py-2 rounded-lg w-fit">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                Download terakhir: 24 Oktober 2023, 14:30 WIB
+                            </div>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-4 opacity-80 hover:opacity-100 transition-opacity">
+<div class="bg-red-50 dark:bg-red-900/10 rounded-xl border border-red-100 dark:border-red-900/30 p-6">
+<h3 class="text-sm font-bold text-red-700 dark:text-red-400 mb-2">Mode Perbaikan (Maintenance)</h3>
+<div class="flex items-center justify-between">
+<p class="text-sm text-red-600/80 dark:text-red-400/70 max-w-lg">
+                                Aktifkan hanya jika sistem sedang diperbaiki. Kasir akan dikunci sementara dan tidak bisa dipakai transaksi.
+                            </p>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+</label>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>
